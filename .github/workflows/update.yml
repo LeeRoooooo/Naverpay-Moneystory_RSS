@@ -25,14 +25,15 @@ jobs:
           pip install -r requirements.txt
           playwright install chromium
           
-      - name: Run scraper
+      - name: Run script
         run: python main.py
 
       - name: Commit and Push
         run: |
-            run: |
-              git config --global user.name "github-actions[bot]"
-              git config --global user.email "github-actions[bot]@users.noreply.github.com"
-              git add main.xml  # 파일 이름을 동일하게 맞춰주세요
-              git commit -m "Update Naver Pay RSS Feed"
-              git push
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            # 특정 파일명 대신 *.xml 을 사용하여 에러 방지
+          git add *.xml 
+            # 파일이 변경되었을 때만 커밋 (변경사항 없으면 에러 없이 통과)
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update RSS Feed"
+          git push
