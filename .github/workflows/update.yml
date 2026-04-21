@@ -1,0 +1,36 @@
+name: Update Naverpay Moneystory RSS
+
+on:
+  schedule:
+    # 한국 시간 기준 09:00, 12:00, 15:00, 18:00, 21:00 실행
+    - cron: '0 0,3,6,9,12 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install tools
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium
+          
+      - name: Run scraper
+        run: python main.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scourt_integrated.xml
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update integrated RSS feed" && git push)
