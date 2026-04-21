@@ -27,7 +27,7 @@ async def get_money_story_entries(page):
             link_el = await card.query_selector("a")
             
             # 파이썬 예약어 'or'를 사용하여 수정 완료
-            if not title_el 또는 not link_el:
+            if not title_el or not link_el:
                 continue
 
             raw_title = (await title_el.inner_text()).strip()
