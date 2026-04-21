@@ -30,7 +30,9 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scourt_integrated.xml
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update integrated RSS feed" && git push)
+            run: |
+              git config --global user.name "github-actions[bot]"
+              git config --global user.email "github-actions[bot]@users.noreply.github.com"
+              git add main.xml  # 파일 이름을 동일하게 맞춰주세요
+              git commit -m "Update Naver Pay RSS Feed"
+              git push
