@@ -32,8 +32,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            # 특정 파일명 대신 *.xml 을 사용하여 에러 방지
-          git add *.xml 
+          git add naverpay_story_v3.xml
             # 파일이 변경되었을 때만 커밋 (변경사항 없으면 에러 없이 통과)
           git diff --quiet && git diff --staged --quiet || git commit -m "Update RSS Feed"
           git push
